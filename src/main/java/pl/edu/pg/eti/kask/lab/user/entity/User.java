@@ -2,6 +2,7 @@ package pl.edu.pg.eti.kask.lab.user.entity;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
@@ -11,8 +12,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class User {
-    private final Long id;
+public class User implements Serializable {
+    private Long id;
     private String userName;
 
     @ToString.Exclude

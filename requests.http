@@ -1,0 +1,29 @@
+GET http://localhost:9080/app/user
+###
+GET http://localhost:9080/app/user/1
+###
+
+GET http://localhost:9080/app/api/portrait/4
+###
+
+POST http://localhost:9080/app/api/portrait/4
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="portrait"; filename="avatar3.png'
+
+< ../../src/main/resources/avatar3.png
+--boundary--
+###
+
+PUT http://localhost:9080/app/api/portrait/3
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="portrait"; filename="avatar2.png'
+
+< ../../src/main/resources/avatar2.png
+--boundary--
+###
+DELETE http://localhost:9080/app/api/portrait/4
+
