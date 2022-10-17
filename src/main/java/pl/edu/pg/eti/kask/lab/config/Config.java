@@ -12,7 +12,6 @@ import java.util.Properties;
 @Getter
 @ApplicationScoped
 public class Config {
-
     public static final Properties properties = new Properties();
 
     public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) throws IOException {

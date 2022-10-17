@@ -1,9 +1,7 @@
 package pl.edu.pg.eti.kask.lab.user.dto;
 
 import lombok.*;
-import pl.edu.pg.eti.kask.lab.user.entity.User;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 

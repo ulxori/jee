@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 @ApplicationScoped
 public class InitializedData {
     private UserRepository userRepository;
-
     @Inject
     public InitializedData(UserRepository userRepository) {
         this.userRepository = userRepository;

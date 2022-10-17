@@ -5,17 +5,8 @@ import lombok.SneakyThrows;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
-/**
- * Utility class for hashing {@link String} objects using SHA-256 algorithm.
- */
 public class Sha256Utility {
 
-    /**
-     * Hashes provided text using SHA-256 algorithm.
-     *
-     * @param text original text
-     * @return hashed value
-     */
     @SneakyThrows
     public static String hash(String text) {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -23,12 +14,6 @@ public class Sha256Utility {
         return bytesToHex(hash);
     }
 
-    /**
-     * Converts bytes to hex string.
-     *
-     * @param hash hash value as byte array
-     * @return hash value as hex string
-     */
     private static String bytesToHex(byte[] hash) {
         StringBuilder hexString = new StringBuilder();
         for (byte b : hash) {

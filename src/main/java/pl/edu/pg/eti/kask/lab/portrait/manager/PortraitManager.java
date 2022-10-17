@@ -3,7 +3,6 @@ package pl.edu.pg.eti.kask.lab.portrait.manager;
 import lombok.Getter;
 import pl.edu.pg.eti.kask.lab.config.Config;
 import pl.edu.pg.eti.kask.lab.portrait.entity.Portrait;
-import pl.edu.pg.eti.kask.lab.portrait.repository.PortraitRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.io.*;
@@ -81,5 +80,4 @@ public class PortraitManager {
    private String getFullPortraitPath(Long id) {
        return String.format("%s/%s.%s", portraitsPath, id, portraitExtension);
    }
-
 }
