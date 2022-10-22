@@ -20,16 +20,13 @@ public class PortraitManager {
    public PortraitManager() {
         portraitsPath = Config.properties.getProperty("portraits_path");
         loadFiles();
-        System.out.println("loaded");
    }
 
    private void loadFiles() {
        File[] files = new File(portraitsPath).listFiles();
 
        for (File file : files) {
-           System.out.println(file);
            String extension = file.getName().split("\\.")[1];
-           System.out.println(extension);
            if (file.isFile() && extension.equals(portraitExtension)) {
                portraits.add(file.getName());
            }
@@ -37,10 +34,9 @@ public class PortraitManager {
        System.out.println(portraits);
    }
 
-   public Optional<Portrait> getPortrait(Long id)  {
+   public synchronized Optional<Portrait> getPortrait(Long id)  {
        boolean isPresent = portraits.contains(getFullPortraitName(id));
        if (isPresent) {
-           System.out.println("isPresent");
            File initialFile = new File(getFullPortraitPath(id));
            try(FileInputStream fis = new FileInputStream(initialFile)) {
                Portrait portrait = new Portrait(id, fis.readAllBytes());
@@ -54,7 +50,7 @@ public class PortraitManager {
        return Optional.empty();
    }
 
-   public void addPortrait(Portrait portrait) {
+   public synchronized void addPortrait(Portrait portrait) {
        try(FileOutputStream fos = new FileOutputStream(getFullPortraitPath(portrait.getId()))) {
            fos.write(portrait.getPortrait());
            portraits.add(getFullPortraitName(portrait.getId()));
@@ -63,13 +59,13 @@ public class PortraitManager {
        }
    }
 
-   public void deletePortrait(Portrait portrait) {
+   public synchronized void deletePortrait(Portrait portrait) {
        File toDelete = new File(getFullPortraitPath(portrait.getId()));
        toDelete.delete();
        portraits.remove(getFullPortraitName(portrait.getId()));
    }
 
-   public void updatePortrait(Portrait portrait) {
+   public synchronized void updatePortrait(Portrait portrait) {
        deletePortrait(portrait);
        addPortrait(portrait);
    }

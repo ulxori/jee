@@ -11,20 +11,20 @@ import java.util.stream.Collectors;
 public class DataStore {
     private Set<User> users = new HashSet<>();
 
-    public Optional<User> findUser(Long id) {
+    public synchronized Optional<User> findUser(Long id) {
         return users.stream()
                 .filter(user -> user.getId().equals(id))
                 .findFirst()
                 .map(CloningUtility::clone);
     }
 
-    public List<User> findAllUsers() {
+    public synchronized List<User> findAllUsers() {
         return users.stream()
                 .map(CloningUtility::clone)
                 .collect(Collectors.toList());
     }
 
-    public void createUser(User user) {
+    public synchronized void createUser(User user) {
         user.setId(findAllUsers().stream()
                 .mapToLong(User::getId)
                 .max().orElse(0) + 1);

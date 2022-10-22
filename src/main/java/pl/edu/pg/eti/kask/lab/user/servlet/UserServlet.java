@@ -32,15 +32,7 @@ public class UserServlet extends HttpServlet {
     }
 
     public static class Patterns {
-
-        /**
-         * All characters.
-         */
         public static final String USERS = "^/?$";
-
-        /**
-         * Specified character.
-         */
         public static final String USER = "^/[0-9]+/?$";
 
     }
@@ -49,12 +41,8 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = ServletUtility.parseRequestPath(request);
         String servletPath = request.getServletPath();
-        System.out.println("here" +path);
-        System.out.println("here" +servletPath);
         if (Paths.USER.equals(servletPath)) {
-            System.out.println("equals");
             if (path.matches(Patterns.USER)) {
-                System.out.println("inside");
                 getUser(request, response);
                 return;
             } else if (path.matches(Patterns.USERS)) {
@@ -68,13 +56,9 @@ public class UserServlet extends HttpServlet {
     private void getUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Long id = Long.parseLong(ServletUtility.parseRequestPath(request).replaceAll("/", ""));
         Optional<User> user = userService.find(id);
-        System.out.println("id" + id);
-        System.out.println("user" + user);
         if (user.isPresent()) {
-            System.out.println("user present");
             response.setContentType(MimeTypes.APPLICATION_JSON);
             GetUserResponse r = GetUserResponse.entityToDtoMapper().apply(user.get());
-            System.out.println(r);
             response.getWriter()
                     .write(jsonb.toJson(GetUserResponse.entityToDtoMapper().apply(user.get())));
         } else {

@@ -56,9 +56,6 @@ public class PortraitServlet extends HttpServlet {
         if (Paths.PORTRAITS.equals(servletPath)) {
           if (path.matches(Patterns.PORTRAIT)) {
               getPortrait(req, resp);
-              System.out.println("ff");
-              //System.out.println(Config.properties);
-              System.out.println(portraitManager.getPortraits());
               return;
           }
         }
@@ -137,8 +134,8 @@ public class PortraitServlet extends HttpServlet {
             }
             Part portrait = req.getPart(Parameters.PORTRAIT);
             if (portrait != null) {
-                System.out.println("here");
                 portraitService.addPortrait(id, portrait.getInputStream());
+                resp.addHeader("Location", req.getServletPath() + ServletUtility.parseRequestPath(req));
                 resp.setStatus(HttpServletResponse.SC_CREATED);
             }
         } else {
