@@ -3,6 +3,7 @@ package pl.edu.pg.eti.kask.lab.dish.entity;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Getter
@@ -12,8 +13,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class Dish {
-    private final Long id;
+public class Dish implements Serializable {
+    private Long id;
     private String name;
     private boolean isVegan;
     private BigDecimal price;
