@@ -2,6 +2,8 @@ package pl.edu.pg.eti.kask.lab.config;
 
 import pl.edu.pg.eti.kask.lab.dish.entity.Dish;
 import pl.edu.pg.eti.kask.lab.dish.repository.DishRepository;
+import pl.edu.pg.eti.kask.lab.opinion.entity.Opinion;
+import pl.edu.pg.eti.kask.lab.opinion.repository.OpinionRepository;
 import pl.edu.pg.eti.kask.lab.user.entity.User;
 import pl.edu.pg.eti.kask.lab.user.repository.UserRepository;
 import pl.edu.pg.eti.kask.lab.utils.Sha256Utility;
@@ -18,10 +20,12 @@ import java.util.stream.Stream;
 public class InitializedData {
     private UserRepository userRepository;
     private DishRepository dishRepository;
+    private OpinionRepository opinionRepository;
     @Inject
-    public InitializedData(UserRepository userRepository, DishRepository dishRepository) {
+    public InitializedData(UserRepository userRepository, DishRepository dishRepository, OpinionRepository opinionRepository) {
         this.userRepository = userRepository;
         this.dishRepository = dishRepository;
+        this.opinionRepository = opinionRepository;
     }
 
     public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
@@ -90,6 +94,33 @@ public class InitializedData {
 
         Stream.of(dish1, dish2, dish3, dish4)
                 .forEach(dishRepository::create);
+
+        Opinion opinion = Opinion.builder()
+                .content("abc")
+                .dish(dish1)
+                .user(user1)
+                .build();
+
+        Opinion opinion2 = Opinion.builder()
+                .content("xyz")
+                .dish(dish1)
+                .user(user1)
+                .build();
+
+        Opinion opinion3 = Opinion.builder()
+                .content("cde")
+                .dish(dish1)
+                .user(user1)
+                .build();
+
+        Opinion opinion4 = Opinion.builder()
+                .content("efg")
+                .dish(dish1)
+                .user(user1)
+                .build();
+
+        Stream.of(opinion4, opinion3, opinion2, opinion)
+                .forEach(opinionRepository::create);
     }
 
 }
