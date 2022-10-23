@@ -3,6 +3,8 @@ package pl.edu.pg.eti.kask.lab.dish.service;
 import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.lab.dish.entity.Dish;
 import pl.edu.pg.eti.kask.lab.dish.repository.DishRepository;
+import pl.edu.pg.eti.kask.lab.opinion.repository.OpinionRepository;
+import pl.edu.pg.eti.kask.lab.opinion.service.OpinionService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -13,10 +15,13 @@ import java.util.Optional;
 @NoArgsConstructor
 public class DishService {
     private DishRepository dishRepository;
+    private OpinionService opinionService;
+
 
     @Inject
-    public DishService(DishRepository dishRepository) {
+    public DishService(DishRepository dishRepository, OpinionService opinionService) {
         this.dishRepository = dishRepository;
+        this.opinionService = opinionService;
     }
 
     public List<Dish> findAll() {
@@ -35,6 +40,8 @@ public class DishService {
         dishRepository.create(dish);
     }
     public void delete(Dish dish) {
+        opinionService.findAllForDish(dish.getId())
+                        .forEach(opinionService::delete);
         dishRepository.delete(dish);
     }
 }

@@ -31,10 +31,6 @@ public class OpinionService {
     }
 
     public Optional<Opinion> find(Long id) {
-        Optional<Dish> dish = dishRepository.find(id);
-        if (dish.isEmpty()) {
-            return Optional.empty();
-        }
         return opinionRepository.find(id);
     }
 

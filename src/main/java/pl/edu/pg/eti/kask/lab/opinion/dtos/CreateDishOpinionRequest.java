@@ -2,9 +2,12 @@ package pl.edu.pg.eti.kask.lab.dish.dtos;
 
 import lombok.*;
 import pl.edu.pg.eti.kask.lab.dish.entity.Dish;
+import pl.edu.pg.eti.kask.lab.opinion.entity.Opinion;
+import pl.edu.pg.eti.kask.lab.user.entity.User;
 
 import java.math.BigDecimal;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 @Getter
 @Setter
@@ -14,15 +17,14 @@ import java.util.function.Function;
 @ToString
 @EqualsAndHashCode
 public class CreateDishOpinionRequest {
-    private String name;
-    private boolean isVegan;
-    private BigDecimal price;
-
-    public static Function<CreateDishOpinionRequest, Dish> dtoToEntityMapper() {
-        return request -> Dish.builder()
-                .isVegan(request.isVegan)
-                .price(request.price)
-                .name(request.name)
+    private Long userId;
+    private String content;
+    public static Function<CreateDishOpinionRequest, Opinion> dtoToEntityMapper(
+            Function<Long, User> userFunction, Supplier<Dish> dishSupplier) {
+        return request -> Opinion.builder()
+                .user(userFunction.apply(request.getUserId()))
+                .dish(dishSupplier.get())
+                .content(request.getContent())
                 .build();
     }
 }

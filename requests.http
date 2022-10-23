@@ -55,6 +55,38 @@ Content-Type: application/json
   "isVegan": false,
   "price": 20.00
 }
+###
+
+GET http://localhost:9080/app/api/dishes/1/opinions
+###
+
+GET http://localhost:9080/app/api/dishes/1/opinions/5
+###
+
+DELETE http://localhost:9080/app/api/dishes/1/opinions/5
+###
+
+POST http://localhost:9080/app/api/dishes/1/opinions
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "content": "good"
+}
+###
+
+
+PUT http://localhost:9080/app/api/dishes/1/opinions/5
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "content": "very good"
+}
+###
+
+
+
 
 
 
