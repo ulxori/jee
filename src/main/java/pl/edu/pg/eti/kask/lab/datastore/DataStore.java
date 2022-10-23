@@ -63,8 +63,8 @@ public class DataStore {
         opinions.add(opinion);
    }
 
-   public synchronized void deleteOpinion(Long id) {
-        findOpinion(id).ifPresent(opinion1 -> opinions.remove(opinion1));
+   public synchronized void deleteOpinion(Opinion opinion) {
+        findOpinion(opinion.getId()).ifPresent(opinion1 -> opinions.remove(opinion1));
    }
 
     public synchronized void updateOpinion(Opinion opinion) throws IllegalArgumentException {
