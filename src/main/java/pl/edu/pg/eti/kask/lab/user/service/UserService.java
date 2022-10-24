@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface UserService {
     Optional<User> find(Long id);
     List<User> findAll();
+
+    User getCurrentUser();
 }

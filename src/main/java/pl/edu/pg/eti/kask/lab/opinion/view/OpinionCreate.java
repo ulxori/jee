@@ -45,16 +45,13 @@ public class OpinionCreate implements Serializable {
     public void init() throws IOException {
         this.opinion = new OpinionEditModel();
         this.opinion.setDish(new DishModel());
-        System.out.println("sdfdsf");
         this.dishes = dishService.findAll().stream()
                 .map(DishModel.entityToModelMapper())
                 .collect(Collectors.toList());
     }
 
     public String saveAction() {
-        System.out.println("save");
-        System.out.println(opinion);
-        opinion.setUser(userService.find(1L).get());
+        opinion.setUser(userService.getCurrentUser());
         opinionService.create(OpinionEditModel.modelToEntityMapper().apply(opinion));
         return null;
     }

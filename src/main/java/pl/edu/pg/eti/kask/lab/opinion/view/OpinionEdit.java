@@ -55,7 +55,6 @@ public class OpinionEdit implements Serializable {
     }
 
     public String saveAction() {
-        System.out.println("inside");
         opinionService.update(OpinionEditModel.modelToEntityMapper().apply(opinion));
         return null;
     }
