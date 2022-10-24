@@ -10,11 +10,11 @@
     </f:metadata>
 
     <ui:define name="content">
-        <h:outputStylesheet library="character" name="css/character_edit.css"/><!-- Automatically relocated to head. -->
+        <h:outputStylesheet library="dish" name="css/simple_create.css"/>
         <h:panelGroup layout="block">
             <article class="text--justified">
                 <header><h2>Create opinion</h2></header>
-                <h:form class="character__form">
+                <h:form class="dish__form">
                     <h:outputLabel for="content" value="Content:"/>
                     <h:inputText class="ui-control ui-input" id="content" value="#{opinionCreate.opinion.content}"/>
                     <h:outputLabel for="dish" value="Select dish:"/>
