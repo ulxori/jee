@@ -4,10 +4,12 @@ import pl.edu.pg.eti.kask.lab.datastore.DataStore;
 import pl.edu.pg.eti.kask.lab.opinion.entity.Opinion;
 import pl.edu.pg.eti.kask.lab.repository.SimpleRepository;
 
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
+@Dependent
 public class OpinionRepository implements SimpleRepository<Opinion, Long> {
 
     private DataStore store;

@@ -1,15 +1,19 @@
 package pl.edu.pg.eti.kask.lab.opinion.service;
 
+import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.lab.dish.entity.Dish;
 import pl.edu.pg.eti.kask.lab.dish.repository.DishRepository;
 import pl.edu.pg.eti.kask.lab.opinion.entity.Opinion;
 import pl.edu.pg.eti.kask.lab.opinion.repository.OpinionRepository;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@ApplicationScoped
+@NoArgsConstructor
 public class OpinionService {
     private OpinionRepository opinionRepository;
     private DishRepository dishRepository;

@@ -64,7 +64,12 @@ public class DataStore {
    }
 
    public synchronized void deleteOpinion(Opinion opinion) {
-        findOpinion(opinion.getId()).ifPresent(opinion1 -> opinions.remove(opinion1));
+       findOpinion(opinion.getId()).ifPresentOrElse(
+               original -> opinions.remove(original),
+               () -> {
+                   throw new IllegalArgumentException(
+                           String.format("The opinion with id \"%d\" does not exist", opinion.getId()));
+               });
    }
 
     public synchronized void updateOpinion(Opinion opinion) throws IllegalArgumentException {
@@ -113,7 +118,12 @@ public class DataStore {
     }
 
    public synchronized void deleteDish(Dish dish) {
-        dishes.remove(dish);
+       findDish(dish.getId()).ifPresentOrElse(
+               original -> dishes.remove(original),
+               () -> {
+                   throw new IllegalArgumentException(
+                           String.format("The dish with id \"%d\" does not exist", dish.getId()));
+               });
    }
 
 }
