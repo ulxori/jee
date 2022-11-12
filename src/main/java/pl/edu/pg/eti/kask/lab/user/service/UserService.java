@@ -9,5 +9,6 @@ public interface UserService {
     Optional<User> find(Long id);
     List<User> findAll();
 
+    void create(User user);
     User getCurrentUser();
 }

@@ -5,42 +5,50 @@ import pl.edu.pg.eti.kask.lab.opinion.entity.Opinion;
 import pl.edu.pg.eti.kask.lab.repository.SimpleRepository;
 
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
-@Dependent
+@RequestScoped
 public class OpinionRepository implements SimpleRepository<Opinion, Long> {
 
-    private DataStore store;
+    private EntityManager em;
 
-    @Inject
-    public OpinionRepository(DataStore store) {
-        this.store = store;
+    @PersistenceContext
+    public void setEm(EntityManager em) {
+        this.em = em;
     }
 
     @Override
     public Optional<Opinion> find(Long id) {
-        return store.findOpinion(id);
+        return Optional.ofNullable(em.find(Opinion.class, id));
     }
 
     @Override
     public List<Opinion> findAll() {
-        return store.findAllOpinions();
+        return em.createQuery("select o from Opinion o", Opinion.class).getResultList();
     }
 
     @Override
     public void create(Opinion entity) {
-        store.createOpinion(entity);
+        em.persist(entity);
     }
 
     @Override
     public void delete(Opinion entity) {
-        store.deleteOpinion(entity);
+        em.remove(em.find(Opinion.class, entity.getId()));
     }
 
     @Override
     public void update(Opinion entity) {
-        store.updateOpinion(entity);
+        em.merge(entity);
+    }
+
+    @Override
+    public void detach(Opinion entity) {
+        em.detach(entity);
     }
 }

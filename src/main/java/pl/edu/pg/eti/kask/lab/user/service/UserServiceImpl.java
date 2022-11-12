@@ -6,6 +6,7 @@ import pl.edu.pg.eti.kask.lab.user.repository.UserRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +28,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void create(User user) {
+        userRepository.create(user);
     }
 
     @Override

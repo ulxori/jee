@@ -5,32 +5,36 @@ import pl.edu.pg.eti.kask.lab.repository.SimpleRepository;
 import pl.edu.pg.eti.kask.lab.user.entity.User;
 
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
-@Dependent
+@RequestScoped
 public class UserRepository implements SimpleRepository<User, Long> {
-    private DataStore dataStore;
 
-    @Inject
-    public UserRepository(DataStore dataStore) {
-        this.dataStore = dataStore;
+    private EntityManager em;
+
+    @PersistenceContext
+    public void setEm(EntityManager em) {
+        this.em = em;
     }
 
     @Override
     public Optional<User> find(Long id) {
-        return dataStore.findUser(id);
+        return Optional.ofNullable(em.find(User.class, id));
     }
 
     @Override
     public List<User> findAll() {
-        return dataStore.findAllUsers();
+        return em.createQuery("select u from User u", User.class).getResultList();
     }
 
     @Override
     public void create(User entity) {
-        dataStore.createUser(entity);
+        em.persist(entity);
     }
 
     @Override
@@ -41,5 +45,10 @@ public class UserRepository implements SimpleRepository<User, Long> {
     @Override
     public void update(User entity) {
         throw new UnsupportedOperationException("Not implemented.");
+    }
+
+    @Override
+    public void detach(User entity) {
+        em.detach(entity);
     }
 }

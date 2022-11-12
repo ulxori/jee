@@ -2,14 +2,18 @@ package pl.edu.pg.eti.kask.lab.config;
 
 import pl.edu.pg.eti.kask.lab.dish.entity.Dish;
 import pl.edu.pg.eti.kask.lab.dish.repository.DishRepository;
+import pl.edu.pg.eti.kask.lab.dish.service.DishService;
 import pl.edu.pg.eti.kask.lab.opinion.entity.Opinion;
 import pl.edu.pg.eti.kask.lab.opinion.repository.OpinionRepository;
+import pl.edu.pg.eti.kask.lab.opinion.service.OpinionService;
 import pl.edu.pg.eti.kask.lab.user.entity.User;
 import pl.edu.pg.eti.kask.lab.user.repository.UserRepository;
+import pl.edu.pg.eti.kask.lab.user.service.UserService;
 import pl.edu.pg.eti.kask.lab.utils.Sha256Utility;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
+import javax.enterprise.context.control.RequestContextController;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import java.math.BigDecimal;
@@ -18,14 +22,17 @@ import java.util.stream.Stream;
 
 @ApplicationScoped
 public class InitializedData {
-    private UserRepository userRepository;
-    private DishRepository dishRepository;
-    private OpinionRepository opinionRepository;
+    private UserService userService;
+    private DishService dishService;
+    private OpinionService opinionService;
+    private RequestContextController requestContextController;
     @Inject
-    public InitializedData(UserRepository userRepository, DishRepository dishRepository, OpinionRepository opinionRepository) {
-        this.userRepository = userRepository;
-        this.dishRepository = dishRepository;
-        this.opinionRepository = opinionRepository;
+    public InitializedData(UserService userService, DishService dishService,
+                           OpinionService opinionService, RequestContextController requestContextController) {
+        this.userService= userService;
+        this.dishService = dishService;
+        this.opinionService = opinionService;
+        this.requestContextController = requestContextController;
     }
 
     public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
@@ -33,6 +40,8 @@ public class InitializedData {
     }
 
     public synchronized void initData() {
+        requestContextController.activate();
+
         User user1 = User.builder()
                 .password(Sha256Utility.hash("abc"))
                 .email("user1@gmail.com")
@@ -62,7 +71,7 @@ public class InitializedData {
                 .build();
 
         Stream.of(user1, user2, user3, user4)
-                .forEach(userRepository::create);
+                .forEach(userService::create);
 
         Dish dish1 = Dish.builder()
                 .id(1L)
@@ -93,7 +102,7 @@ public class InitializedData {
                 .build();
 
         Stream.of(dish1, dish2, dish3, dish4)
-                .forEach(dishRepository::create);
+                .forEach(dishService::create);
 
         Opinion opinion = Opinion.builder()
                 .content("abc")
@@ -120,7 +129,9 @@ public class InitializedData {
                 .build();
 
         Stream.of(opinion4, opinion3, opinion2, opinion)
-                .forEach(opinionRepository::create);
+                .forEach(opinionService::create);
+
+        requestContextController.deactivate();
     }
 
 }

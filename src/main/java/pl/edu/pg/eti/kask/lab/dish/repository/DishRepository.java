@@ -5,42 +5,50 @@ import pl.edu.pg.eti.kask.lab.dish.entity.Dish;
 import pl.edu.pg.eti.kask.lab.repository.SimpleRepository;
 
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
-@Dependent
+@RequestScoped
 public class DishRepository implements SimpleRepository<Dish, Long> {
 
-    private DataStore dataStore;
+    private EntityManager em;
 
-    @Inject
-    public DishRepository(DataStore store) {
-        this.dataStore = store;
+    @PersistenceContext
+    public void setEm(EntityManager em) {
+        this.em = em;
     }
 
     @Override
     public Optional<Dish> find(Long id) {
-        return dataStore.findDish(id);
+        return Optional.ofNullable(em.find(Dish.class, id));
     }
 
     @Override
     public List<Dish> findAll() {
-        return dataStore.findAllDishes();
+        return em.createQuery("select d from Dish d", Dish.class).getResultList();
     }
 
     @Override
     public void create(Dish entity) {
-        dataStore.createDish(entity);
+        em.persist(entity);
     }
 
     @Override
     public void delete(Dish entity) {
-        dataStore.deleteDish(entity);
+        em.remove(em.find(Dish.class, entity.getId()));
     }
 
     @Override
     public void update(Dish entity) {
-        dataStore.updateDish(entity);
+        em.merge(entity);
+    }
+
+    @Override
+    public void detach(Dish entity) {
+        em.detach(entity);
     }
 }

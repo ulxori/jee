@@ -8,6 +8,7 @@ import pl.edu.pg.eti.kask.lab.opinion.service.OpinionService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,13 +33,17 @@ public class DishService {
         return dishRepository.find(id);
     }
 
+    @Transactional
     public void update(Dish dish) {
         dishRepository.update(dish);
     }
 
+    @Transactional
     public void create(Dish dish) {
         dishRepository.create(dish);
     }
+
+    @Transactional
     public void delete(Dish dish) {
         opinionService.findAllForDish(dish.getId())
                         .forEach(opinionService::delete);

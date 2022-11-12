@@ -44,4 +44,9 @@ public class PortraitRepository implements SimpleRepository<Portrait, Long> {
         portraitManager.updatePortrait(entity);
     }
 
+    @Override
+    public void detach(Portrait entity) {
+
+    }
+
 }
