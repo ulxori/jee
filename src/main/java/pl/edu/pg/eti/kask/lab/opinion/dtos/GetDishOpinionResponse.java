@@ -18,8 +18,6 @@ import java.util.function.Function;
 @EqualsAndHashCode
 public class GetDishOpinionResponse {
     private Long id;
-    //private User user;
-    //private Dish dish;
     private String content;
 
     public static Function<Opinion, GetDishOpinionResponse> entityToDtoMapper() {

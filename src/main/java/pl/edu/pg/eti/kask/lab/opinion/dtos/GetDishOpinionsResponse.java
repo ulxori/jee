@@ -18,8 +18,6 @@ public class GetDishOpinionsResponse {
     @Builder
     public static class Opinion {
         private Long id;
-        //private User user;
-        //private Dish dish;
         private String content;
     }
 

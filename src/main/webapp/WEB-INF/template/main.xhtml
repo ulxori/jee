@@ -16,21 +16,7 @@
     </h:head>
     <h:body>
         <div class="container">
-           <!-- <header class="header">
-                <h1></h1>
-                <h:form rendered="#{!userContext.authorized}">
-                    <h:outputLabel value="Login:" for="login"/>
-                    <h:inputText id="login" class="ui-control ui-input" value="#{userLogin.login}"/>
-                    <h:outputLabel value="Password:" for="password"/>
-                    <h:inputSecret id="password" class="ui-control ui-input" value="#{userLogin.password}"/>
-                    <h:commandButton class="ui-control ui-button" type="submit" value="Login" action="#{userLogin.loginAction()}"/>
-                </h:form>
-                <h:form rendered="#{userContext.authorized}">
-                    Logged as: <h:outputText value="#{userContext.principal}"/>
-                    <h:commandButton class="ui-control ui-button" value="Logout" action="#{userLogout.logoutAction()}"/>
-                </h:form>
-            </header>-->
-
+            <h1>Simple Dish app 180454</h1>
             <nav class="navigation-bar">
                 <ul>
                     <li><h:link outcome="/index.xhtml">main</h:link></li>
@@ -41,7 +27,7 @@
 
             <section class="main-section">
                 <ui:insert name="content"/>
-                <h:graphicImage value = "http://www.tutorialspoint.com/images/jsf-mini-logo.png" class="center"/>
+                <h:graphicImage value = "http://www.tutorialspoint.com/images/jsf-mini-logo.png" alt = "image" class="center"/>
             </section>
 
             <footer class="footer">

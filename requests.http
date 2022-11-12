@@ -34,7 +34,7 @@ GET http://localhost:9080/app/api/dishes
 GET http://localhost:9080/app/api/dishes/1
 ###
 
-DELETE http://localhost:9080/app/api/dishes/1
+DELETE http://localhost:9080/app/api/dishes/3
 ###
 
 POST http://localhost:9080/app/api/dishes
@@ -60,10 +60,10 @@ Content-Type: application/json
 GET http://localhost:9080/app/api/dishes/1/opinions
 ###
 
-GET http://localhost:9080/app/api/dishes/1/opinions/5
+GET http://localhost:9080/app/api/dishes/1/opinions/1
 ###
 
-DELETE http://localhost:9080/app/api/dishes/1/opinions/5
+DELETE http://localhost:9080/app/api/dishes/1/opinions/1
 ###
 
 POST http://localhost:9080/app/api/dishes/1/opinions
