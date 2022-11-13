@@ -1,17 +1,16 @@
 package pl.edu.pg.eti.kask.lab.dish.repository;
 
-import pl.edu.pg.eti.kask.lab.datastore.DataStore;
+import lombok.extern.java.Log;
 import pl.edu.pg.eti.kask.lab.dish.entity.Dish;
 import pl.edu.pg.eti.kask.lab.repository.SimpleRepository;
 
-import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
+@Log
 @RequestScoped
 public class DishRepository implements SimpleRepository<Dish, Long> {
 
@@ -24,6 +23,7 @@ public class DishRepository implements SimpleRepository<Dish, Long> {
 
     @Override
     public Optional<Dish> find(Long id) {
+        //System.out.println("Dish Repository: " + em.find(Dish.class, id) + "opinons: " + em.find(Dish.class, id).getOpinions().size());
         return Optional.ofNullable(em.find(Dish.class, id));
     }
 

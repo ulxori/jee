@@ -1,12 +1,9 @@
 package pl.edu.pg.eti.kask.lab.opinion.repository;
 
-import pl.edu.pg.eti.kask.lab.datastore.DataStore;
 import pl.edu.pg.eti.kask.lab.opinion.entity.Opinion;
 import pl.edu.pg.eti.kask.lab.repository.SimpleRepository;
 
-import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -24,6 +21,7 @@ public class OpinionRepository implements SimpleRepository<Opinion, Long> {
 
     @Override
     public Optional<Opinion> find(Long id) {
+        System.out.println("OpinionRepository: "+em.find(Opinion.class, id));
         return Optional.ofNullable(em.find(Opinion.class, id));
     }
 
@@ -50,5 +48,11 @@ public class OpinionRepository implements SimpleRepository<Opinion, Long> {
     @Override
     public void detach(Opinion entity) {
         em.detach(entity);
+    }
+
+    public List<Opinion> findForDish(Long dishId) {
+        return em.createQuery("select o from Opinion o where o.dish.id = :dish", Opinion.class)
+                .setParameter("dish", dishId)
+                .getResultList();
     }
 }

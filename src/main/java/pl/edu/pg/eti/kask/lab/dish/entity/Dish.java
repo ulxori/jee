@@ -29,6 +29,6 @@ public class Dish implements Serializable {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "dish", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Opinion> opinions;
 }

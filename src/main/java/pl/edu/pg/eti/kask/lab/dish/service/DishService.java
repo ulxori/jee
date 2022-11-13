@@ -45,8 +45,7 @@ public class DishService {
 
     @Transactional
     public void delete(Dish dish) {
-        opinionService.findAllForDish(dish.getId())
-                        .forEach(opinionService::delete);
+        //opinionService.findAllForDish(dish.getId()).forEach(opinionService::delete);
         dishRepository.delete(dish);
     }
 }

@@ -1,12 +1,9 @@
 package pl.edu.pg.eti.kask.lab.user.repository;
 
-import pl.edu.pg.eti.kask.lab.datastore.DataStore;
 import pl.edu.pg.eti.kask.lab.repository.SimpleRepository;
 import pl.edu.pg.eti.kask.lab.user.entity.User;
 
-import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -24,6 +21,7 @@ public class UserRepository implements SimpleRepository<User, Long> {
 
     @Override
     public Optional<User> find(Long id) {
+//        System.out.println("User repository" + em.find(User.class,id) + " opinions "+ em.getReference(User.class,id).getOpinions().size());
         return Optional.ofNullable(em.find(User.class, id));
     }
 

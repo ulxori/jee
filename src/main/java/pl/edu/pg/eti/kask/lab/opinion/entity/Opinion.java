@@ -22,12 +22,12 @@ public class Opinion implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name ="user")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "dishes")
+    @ManyToOne()
+    @JoinColumn(name = "dish")
     private Dish dish;
 
     private String content;
