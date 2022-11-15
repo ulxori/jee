@@ -3,7 +3,7 @@ GET http://localhost:9080/app/user
 GET http://localhost:9080/app/user/1
 ###
 
-GET http://localhost:9080/app/api/portrait/4
+GET http://localhost:9080/app/api/portrait/1
 ###
 
 POST http://localhost:9080/app/api/portrait/4

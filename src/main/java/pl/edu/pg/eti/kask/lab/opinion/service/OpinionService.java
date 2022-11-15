@@ -41,6 +41,8 @@ public class OpinionService {
 
     @Transactional
     public void update(Opinion opinion) {
+        Opinion original = opinionRepository.find(opinion.getId()).orElseThrow();
+        opinionRepository.detach(original);
         opinionRepository.update(opinion);
     }
 
@@ -53,6 +55,9 @@ public class OpinionService {
 
     @Transactional
     public void delete(Opinion opinion) {
+        Opinion op = opinionRepository.find(opinion.getId()).orElseThrow();
+        op.getDish().getOpinions().remove(opinion);
+        op.getUser().getOpinions().remove(opinion);
         opinionRepository.delete(opinion);
     }
 }

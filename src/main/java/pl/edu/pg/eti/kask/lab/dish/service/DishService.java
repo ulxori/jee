@@ -16,13 +16,11 @@ import java.util.Optional;
 @NoArgsConstructor
 public class DishService {
     private DishRepository dishRepository;
-    private OpinionService opinionService;
 
 
     @Inject
-    public DishService(DishRepository dishRepository, OpinionService opinionService) {
+    public DishService(DishRepository dishRepository){
         this.dishRepository = dishRepository;
-        this.opinionService = opinionService;
     }
 
     public List<Dish> findAll() {
@@ -35,6 +33,8 @@ public class DishService {
 
     @Transactional
     public void update(Dish dish) {
+        Dish original = dishRepository.find(dish.getId()).orElseThrow();
+        dishRepository.detach(original);
         dishRepository.update(dish);
     }
 
@@ -45,7 +45,7 @@ public class DishService {
 
     @Transactional
     public void delete(Dish dish) {
-        //opinionService.findAllForDish(dish.getId()).forEach(opinionService::delete);
-        dishRepository.delete(dish);
+        System.out.println(dishRepository.find(dish.getId()));
+        dishRepository.delete(dishRepository.find(dish.getId()).orElseThrow());
     }
 }

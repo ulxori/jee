@@ -86,8 +86,8 @@ public class DishController {
     public Response updateDish(@PathParam("id") Long id, UpdateDishRequest request) {
         Optional<Dish> dish = dishService.find(id);
         if (dish.isPresent()) {
-            UpdateDishRequest.dtoToEntityMapper().apply(dish.get(), request);
-            dishService.update(dish.get());
+            Dish updated = UpdateDishRequest.dtoToEntityMapper().apply(dish.get(), request);
+            dishService.update(updated);
             return Response
                     .status(Response.Status.NO_CONTENT)
                     .build();
