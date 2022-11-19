@@ -13,6 +13,8 @@ import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
+import javax.inject.Inject;
+import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.stream.Stream;
@@ -23,7 +25,13 @@ public class InitializedData {
     private UserService userService;
     private DishService dishService;
     private OpinionService opinionService;
+    private Pbkdf2PasswordHash pbkdf;
     //private RequestContextController requestContextController;
+
+    @Inject
+    public void setPbkdf(Pbkdf2PasswordHash pbkdf) {
+        this.pbkdf = pbkdf;
+    }
 
     @EJB
     public void setUserService(UserService userService) {
@@ -57,7 +65,7 @@ public class InitializedData {
         //requestContextController.activate();
 
         User user1 = User.builder()
-                .password(Sha256Utility.hash("abc"))
+                .password(pbkdf.generate("admin".toCharArray()))
                 .email("user1@gmail.com")
                 .userName("user1")
                 .birthDate(LocalDate.of(2000,1,1))
