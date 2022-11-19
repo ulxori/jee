@@ -4,14 +4,17 @@ import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.lab.portrait.entity.Portrait;
 import pl.edu.pg.eti.kask.lab.portrait.repository.PortraitRepository;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 
+@Stateless
+@LocalBean
 @NoArgsConstructor
-@ApplicationScoped
 public class PortraitService {
 
     private PortraitRepository portraitRepository;

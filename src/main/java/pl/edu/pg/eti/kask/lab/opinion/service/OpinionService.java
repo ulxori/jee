@@ -6,13 +6,16 @@ import pl.edu.pg.eti.kask.lab.opinion.entity.Opinion;
 import pl.edu.pg.eti.kask.lab.opinion.repository.OpinionRepository;
 import pl.edu.pg.eti.kask.lab.user.repository.UserRepository;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@ApplicationScoped
+@Stateless
+@LocalBean
 @NoArgsConstructor
 public class OpinionService {
     private OpinionRepository opinionRepository;

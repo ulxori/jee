@@ -4,13 +4,17 @@ import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.lab.dish.entity.Dish;
 import pl.edu.pg.eti.kask.lab.dish.repository.DishRepository;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@ApplicationScoped
+@Stateless
+@LocalBean
 @NoArgsConstructor
 public class DishService {
     private DishRepository dishRepository;

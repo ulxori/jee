@@ -1,21 +1,24 @@
 package pl.edu.pg.eti.kask.lab.dish.view;
 
+import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.lab.dish.entity.Dish;
 import pl.edu.pg.eti.kask.lab.dish.model.DishesModel;
 import pl.edu.pg.eti.kask.lab.dish.service.DishService;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @RequestScoped
 @Named
+@NoArgsConstructor
 public class DishList {
-    private final DishService dishService;
+    private DishService dishService;
     private DishesModel dishes;
 
-    @Inject
-    public DishList(DishService dishService) {
+    @EJB
+    public void setDishService(DishService dishService) {
         this.dishService = dishService;
     }
 

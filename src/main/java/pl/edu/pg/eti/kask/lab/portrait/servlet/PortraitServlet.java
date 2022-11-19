@@ -8,6 +8,7 @@ import pl.edu.pg.eti.kask.lab.servlet.ServletUtility;
 import pl.edu.pg.eti.kask.lab.user.entity.User;
 import pl.edu.pg.eti.kask.lab.user.service.UserService;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -29,10 +30,18 @@ public class PortraitServlet extends HttpServlet {
     private PortraitManager portraitManager;
 
     @Inject
-    public PortraitServlet(UserService userService, PortraitService portraitService, PortraitManager portraitManager) {
-        this.userService = userService;
-        this.portraitService = portraitService;
+    public PortraitServlet(PortraitManager portraitManager) {
         this.portraitManager = portraitManager;
+    }
+
+    @EJB
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @EJB
+    public void setPortraitService(PortraitService portraitService) {
+        this.portraitService = portraitService;
     }
 
     public static class Paths {

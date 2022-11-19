@@ -4,6 +4,7 @@ import lombok.extern.java.Log;
 import pl.edu.pg.eti.kask.lab.dish.entity.Dish;
 import pl.edu.pg.eti.kask.lab.repository.SimpleRepository;
 
+import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Log
-@RequestScoped
+@Dependent
 public class DishRepository implements SimpleRepository<Dish, Long> {
 
     private EntityManager em;

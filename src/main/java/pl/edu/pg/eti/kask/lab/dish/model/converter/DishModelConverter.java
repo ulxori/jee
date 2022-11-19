@@ -1,9 +1,11 @@
 package pl.edu.pg.eti.kask.lab.dish.model.converter;
 
+import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.lab.dish.entity.Dish;
 import pl.edu.pg.eti.kask.lab.dish.model.DishModel;
 import pl.edu.pg.eti.kask.lab.dish.service.DishService;
 
+import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -12,12 +14,13 @@ import javax.inject.Inject;
 import java.util.Optional;
 
 @FacesConverter(forClass = DishModel.class, managed = true)
+@NoArgsConstructor
 public class DishModelConverter implements Converter<DishModel> {
 
     private DishService service;
 
-    @Inject
-    public DishModelConverter(DishService service) {
+    @EJB
+    public void setDishService(DishService service) {
         this.service = service;
     }
 

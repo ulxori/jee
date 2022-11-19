@@ -7,6 +7,7 @@ import pl.edu.pg.eti.kask.lab.dish.dtos.UpdateDishRequest;
 import pl.edu.pg.eti.kask.lab.dish.entity.Dish;
 import pl.edu.pg.eti.kask.lab.dish.service.DishService;
 
+import javax.ejb.EJB;
 import javax.ejb.PostActivate;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -22,7 +23,7 @@ public class DishController {
     public DishController() {
     }
 
-    @Inject
+    @EJB
     public void setDishService(DishService dishService) {
         this.dishService = dishService;
     }

@@ -3,6 +3,7 @@ package pl.edu.pg.eti.kask.lab.opinion.repository;
 import pl.edu.pg.eti.kask.lab.opinion.entity.Opinion;
 import pl.edu.pg.eti.kask.lab.repository.SimpleRepository;
 
+import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,7 +11,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@RequestScoped
+@Dependent
 public class OpinionRepository implements SimpleRepository<Opinion, Long> {
 
     private EntityManager em;

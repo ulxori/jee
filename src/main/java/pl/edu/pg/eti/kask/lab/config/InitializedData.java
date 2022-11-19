@@ -1,47 +1,60 @@
 package pl.edu.pg.eti.kask.lab.config;
 
+import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.lab.dish.entity.Dish;
-import pl.edu.pg.eti.kask.lab.dish.repository.DishRepository;
 import pl.edu.pg.eti.kask.lab.dish.service.DishService;
 import pl.edu.pg.eti.kask.lab.opinion.entity.Opinion;
-import pl.edu.pg.eti.kask.lab.opinion.repository.OpinionRepository;
 import pl.edu.pg.eti.kask.lab.opinion.service.OpinionService;
 import pl.edu.pg.eti.kask.lab.user.entity.User;
-import pl.edu.pg.eti.kask.lab.user.repository.UserRepository;
 import pl.edu.pg.eti.kask.lab.user.service.UserService;
 import pl.edu.pg.eti.kask.lab.utils.Sha256Utility;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
-import javax.enterprise.context.control.RequestContextController;
 import javax.enterprise.event.Observes;
-import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.stream.Stream;
 
 @ApplicationScoped
+@NoArgsConstructor
 public class InitializedData {
     private UserService userService;
     private DishService dishService;
     private OpinionService opinionService;
-    private RequestContextController requestContextController;
-    @Inject
+    //private RequestContextController requestContextController;
+
+    @EJB
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @EJB
+    public void setDishService(DishService dishService) {
+        this.dishService = dishService;
+    }
+
+    @EJB
+    public void setOpinionService(OpinionService opinionService) {
+        this.opinionService = opinionService;
+    }
+
+    /*@Inject
     public InitializedData(UserService userService, DishService dishService,
                            OpinionService opinionService, RequestContextController requestContextController) {
         this.userService= userService;
         this.dishService = dishService;
         this.opinionService = opinionService;
         this.requestContextController = requestContextController;
-    }
+    }*/
 
     public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
         initData();
     }
 
     public synchronized void initData() {
-        requestContextController.activate();
+        //requestContextController.activate();
 
         User user1 = User.builder()
                 .password(Sha256Utility.hash("abc"))
@@ -132,7 +145,7 @@ public class InitializedData {
         Stream.of(opinion4, opinion3, opinion2, opinion)
                 .forEach(opinionService::create);
 
-        requestContextController.deactivate();
+        //requestContextController.deactivate();
     }
 
 }

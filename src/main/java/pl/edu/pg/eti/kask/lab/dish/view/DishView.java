@@ -1,6 +1,7 @@
 package pl.edu.pg.eti.kask.lab.dish.view;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.edu.pg.eti.kask.lab.dish.entity.Dish;
 import pl.edu.pg.eti.kask.lab.dish.model.DishViewModel;
@@ -9,6 +10,7 @@ import pl.edu.pg.eti.kask.lab.dish.service.DishService;
 import pl.edu.pg.eti.kask.lab.opinion.entity.Opinion;
 import pl.edu.pg.eti.kask.lab.opinion.service.OpinionService;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -21,9 +23,10 @@ import java.util.Optional;
 
 @ViewScoped
 @Named
+@NoArgsConstructor
 public class DishView implements Serializable {
-    private final DishService dishService;
-    private final OpinionService opinionService;
+    private DishService dishService;
+    private OpinionService opinionService;
 
     @Setter
     @Getter
@@ -32,12 +35,15 @@ public class DishView implements Serializable {
     @Getter
     private DishViewModel dish;
 
-    @Inject
-    public DishView(DishService dishService, OpinionService opinionService) {
+    @EJB
+    public void setDishService(DishService dishService) {
         this.dishService = dishService;
-        this.opinionService = opinionService;
     }
 
+    @EJB
+    public void setOpinionService(OpinionService opinionService) {
+        this.opinionService = opinionService;
+    }
     public void init() throws IOException {
         System.out.println("init");
         Optional<Dish> dish = dishService.find(id);

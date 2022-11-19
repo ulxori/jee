@@ -10,7 +10,7 @@ import pl.edu.pg.eti.kask.lab.opinion.entity.Opinion;
 import pl.edu.pg.eti.kask.lab.opinion.service.OpinionService;
 import pl.edu.pg.eti.kask.lab.user.service.UserService;
 
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -27,17 +27,17 @@ public class DishOpinionController {
     public DishOpinionController() {
     }
 
-    @Inject
+    @EJB
     public void setDishService(DishService dishService) {
         this.dishService = dishService;
     }
 
-    @Inject
+    @EJB
     public void setOpinionService(OpinionService opinionService) {
         this.opinionService = opinionService;
     }
 
-    @Inject
+    @EJB
     public void setUserService(UserService userService) {
         this.userService = userService;
     }

@@ -1,6 +1,7 @@
 package pl.edu.pg.eti.kask.lab.opinion.view;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.edu.pg.eti.kask.lab.dish.model.DishModel;
 import pl.edu.pg.eti.kask.lab.dish.service.DishService;
@@ -8,8 +9,8 @@ import pl.edu.pg.eti.kask.lab.opinion.model.OpinionEditModel;
 import pl.edu.pg.eti.kask.lab.opinion.service.OpinionService;
 import pl.edu.pg.eti.kask.lab.user.service.UserService;
 
+import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
@@ -18,10 +19,11 @@ import java.util.stream.Collectors;
 
 @ViewScoped
 @Named
+@NoArgsConstructor
 public class OpinionCreate implements Serializable {
-    private final OpinionService opinionService;
-    private final DishService dishService;
-    private final UserService userService;
+    private OpinionService opinionService;
+    private DishService dishService;
+    private UserService userService;
 
     @Setter
     @Getter
@@ -34,11 +36,18 @@ public class OpinionCreate implements Serializable {
     @Getter
     private List<DishModel> dishes;
 
-
-    @Inject
-    public OpinionCreate(OpinionService opinionService, DishService dishService, UserService userService) {
+    @EJB
+    public void setOpinionService(OpinionService opinionService) {
         this.opinionService = opinionService;
+    }
+
+    @EJB
+    public void setDishService(DishService dishService) {
         this.dishService = dishService;
+    }
+
+    @EJB
+    public void setUserService(UserService userService) {
         this.userService = userService;
     }
 

@@ -1,11 +1,13 @@
 package pl.edu.pg.eti.kask.lab.opinion.view;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.edu.pg.eti.kask.lab.opinion.entity.Opinion;
 import pl.edu.pg.eti.kask.lab.opinion.service.OpinionService;
 import pl.edu.pg.eti.kask.lab.opinion.model.OpinionViewModel;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -16,8 +18,9 @@ import java.util.Optional;
 
 @RequestScoped
 @Named
+@NoArgsConstructor
 public class OpinionView {
-    private final OpinionService opinionService;
+    private OpinionService opinionService;
 
     @Setter
     @Getter
@@ -26,11 +29,10 @@ public class OpinionView {
     @Getter
     private OpinionViewModel opinionModel;
 
-    @Inject
-    public OpinionView(OpinionService opinionService) {
+    @EJB
+    public void setOpinionService(OpinionService opinionService) {
         this.opinionService = opinionService;
     }
-
     public void init() throws IOException {
         Optional<Opinion> opinion = opinionService.find(id);
         if (opinion.isPresent()) {

@@ -3,13 +3,14 @@ package pl.edu.pg.eti.kask.lab.user.repository;
 import pl.edu.pg.eti.kask.lab.repository.SimpleRepository;
 import pl.edu.pg.eti.kask.lab.user.entity.User;
 
+import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
-@RequestScoped
+@Dependent
 public class UserRepository implements SimpleRepository<User, Long> {
 
     private EntityManager em;
