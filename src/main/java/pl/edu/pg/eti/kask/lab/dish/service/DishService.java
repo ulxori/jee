@@ -33,19 +33,16 @@ public class DishService {
         return dishRepository.find(id);
     }
 
-    @Transactional
     public void update(Dish dish) {
         Dish original = dishRepository.find(dish.getId()).orElseThrow();
         dishRepository.detach(original);
         dishRepository.update(dish);
     }
 
-    @Transactional
     public void create(Dish dish) {
         dishRepository.create(dish);
     }
 
-    @Transactional
     public void delete(Dish dish) {
         dishRepository.delete(dish);
     }

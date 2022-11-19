@@ -30,7 +30,6 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    @Transactional
     public void create(User user) {
         userRepository.create(user);
     }

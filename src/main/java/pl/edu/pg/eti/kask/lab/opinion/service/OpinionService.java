@@ -42,21 +42,18 @@ public class OpinionService {
         return opinionRepository.find(id);
     }
 
-    @Transactional
     public void update(Opinion opinion) {
         Opinion original = opinionRepository.find(opinion.getId()).orElseThrow();
         opinionRepository.detach(original);
         opinionRepository.update(opinion);
     }
 
-    @Transactional
     public void create(Opinion opinion) {
         opinionRepository.create(opinion);
         dishRepository.find(opinion.getDish().getId()).ifPresent(dish -> dish.getOpinions().add(opinion));
         userRepository.find(opinion.getUser().getId()).ifPresent(user -> user.getOpinions().add(opinion));
     }
 
-    @Transactional
     public void delete(Opinion opinion) {
         opinion.getDish().getOpinions().remove(opinion);
         opinion.getUser().getOpinions().remove(opinion);
