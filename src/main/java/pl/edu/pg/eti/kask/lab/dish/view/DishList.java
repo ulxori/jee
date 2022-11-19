@@ -28,7 +28,8 @@ public class DishList {
 
     public String deleteAction(DishesModel.Dish dish) {
         System.out.println("inside");
-        dishService.delete(Dish.builder().id(dish.getId()).build());
+        dishService.delete(dishService.find(dish.getId()).get());
+        //dishService.delete(Dish.builder().id(dish.getId()).build());
         return "dish_list?faces-redirect=true";
     }
 }

@@ -51,7 +51,8 @@ public class DishView implements Serializable {
     }
 
     public String deleteAction(Long opinionId) {
-        opinionService.delete(Opinion.builder().id(opinionId).build());
+        opinionService.delete(opinionService.find(opinionId).get());
+        //opinionService.delete(Opinion.builder().id(opinionId).build());
         return "dish_view?faces-redirect=true&id=" + id;
     }
 }

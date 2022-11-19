@@ -23,7 +23,7 @@ public class DishRepository implements SimpleRepository<Dish, Long> {
 
     @Override
     public Optional<Dish> find(Long id) {
-        //System.out.println("Dish Repository: " + em.find(Dish.class, id) + "opinons: " + em.find(Dish.class, id).getOpinions().size());
+        System.out.println("Dish Repository: " + em.find(Dish.class, id) + "opinons: " + em.find(Dish.class, id).getOpinions().size());
         return Optional.ofNullable(em.find(Dish.class, id));
     }
 

@@ -3,8 +3,6 @@ package pl.edu.pg.eti.kask.lab.dish.service;
 import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.lab.dish.entity.Dish;
 import pl.edu.pg.eti.kask.lab.dish.repository.DishRepository;
-import pl.edu.pg.eti.kask.lab.opinion.repository.OpinionRepository;
-import pl.edu.pg.eti.kask.lab.opinion.service.OpinionService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -45,7 +43,6 @@ public class DishService {
 
     @Transactional
     public void delete(Dish dish) {
-        System.out.println(dishRepository.find(dish.getId()));
-        dishRepository.delete(dishRepository.find(dish.getId()).orElseThrow());
+        dishRepository.delete(dish);
     }
 }

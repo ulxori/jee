@@ -6,6 +6,7 @@ import pl.edu.pg.eti.kask.lab.repository.SimpleRepository;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 

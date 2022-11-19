@@ -76,7 +76,7 @@ Content-Type: application/json
 ###
 
 
-PUT http://localhost:9080/app/api/dishes/1/opinions/10
+PUT http://localhost:9080/app/api/dishes/1/opinions/9
 Content-Type: application/json
 
 {
