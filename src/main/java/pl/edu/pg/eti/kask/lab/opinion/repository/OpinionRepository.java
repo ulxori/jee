@@ -57,4 +57,11 @@ public class OpinionRepository implements SimpleRepository<Opinion, Long> {
                 .setParameter("dish", dishId)
                 .getResultList();
     }
+
+    public List<Opinion> findAllForDishAndUser(Long dishId, String userName) {
+        return em.createQuery("select o from Opinion o where o.dish.id = :dish and o.user.userName = :user", Opinion.class)
+                .setParameter("dish", dishId)
+                .setParameter("user", userName)
+                .getResultList();
+    }
 }

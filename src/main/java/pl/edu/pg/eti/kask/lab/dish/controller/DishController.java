@@ -6,7 +6,11 @@ import pl.edu.pg.eti.kask.lab.dish.dtos.GetDishesResponse;
 import pl.edu.pg.eti.kask.lab.dish.dtos.UpdateDishRequest;
 import pl.edu.pg.eti.kask.lab.dish.entity.Dish;
 import pl.edu.pg.eti.kask.lab.dish.service.DishService;
+import pl.edu.pg.eti.kask.lab.user.entity.User;
+import pl.edu.pg.eti.kask.lab.user.entity.UserRoles;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.PostActivate;
 import javax.inject.Inject;
@@ -17,6 +21,7 @@ import javax.ws.rs.core.UriBuilder;
 import java.util.Optional;
 
 @Path("/dishes")
+@RolesAllowed(UserRoles.ADMIN)
 public class DishController {
     private DishService dishService;
 
@@ -30,6 +35,7 @@ public class DishController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({UserRoles.ADMIN, UserRoles.USER})
     public Response getDishes() {
         return Response
                 .ok(GetDishesResponse.entityToDtoMapper().apply(dishService.findAll()))
@@ -39,6 +45,7 @@ public class DishController {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({UserRoles.ADMIN, UserRoles.USER})
     public Response getDish(@PathParam("id") Long id) {
         Optional<Dish> dish = dishService.find(id);
         if (dish.isPresent()) {

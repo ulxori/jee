@@ -8,8 +8,10 @@ import pl.edu.pg.eti.kask.lab.opinion.dtos.GetDishOpinionsResponse;
 import pl.edu.pg.eti.kask.lab.opinion.dtos.UpdateDishOpinionRequest;
 import pl.edu.pg.eti.kask.lab.opinion.entity.Opinion;
 import pl.edu.pg.eti.kask.lab.opinion.service.OpinionService;
+import pl.edu.pg.eti.kask.lab.user.entity.UserRoles;
 import pl.edu.pg.eti.kask.lab.user.service.UserService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Path("/dishes/{dishId}/opinions")
+@RolesAllowed(UserRoles.USER)
 public class DishOpinionController {
     private OpinionService opinionService;
     private UserService userService;

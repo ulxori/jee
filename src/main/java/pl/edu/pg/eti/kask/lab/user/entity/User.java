@@ -39,4 +39,10 @@ public class User implements Serializable {
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Opinion> opinions;
+
+
+    @CollectionTable(name = "users_roles", joinColumns = @JoinColumn(name = "user", referencedColumnName = "user_name"))
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 }

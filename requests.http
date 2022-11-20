@@ -75,6 +75,146 @@ Content-Type: application/json
 }
 ###
 
+PUT http://localhost:9080/app/api/dishes/1/opinions/9
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "content": "very good"
+}
+###
+
+
+
+
+
+### dXNlcjE6YWJj - user / YWRtaW46YWRtaW4= - admin
+// @no-cookie-jar
+GET http://localhost:9080/app/user
+Authorization: Basic dXNlcjE6YWJj
+###
+
+// @no-cookie-jar
+POST http://localhost:9080/app/api/users
+Content-Type: application/json
+
+{
+  "userName": "new",
+  "password": "abc",
+  "email": "new@gmail.com",
+  "birthDate": "2000-01-01"
+}
+###
+
+
+// @no-cookie-jar
+GET http://localhost:9080/app/user/9
+###
+
+
+
+// @no-cookie-jar
+GET http://localhost:9080/app/api/dishes
+Authorization: Basic dXNlcjE6YWJj
+###
+
+// @no-cookie-jar
+GET http://localhost:9080/app/api/dishes
+Authorization: Basic YWRtaW46YWRtaW4=
+###
+
+// @no-cookie-jar
+POST http://localhost:9080/app/api/dishes
+Content-Type: application/json
+Authorization: Basic dXNlcjE6YWJj
+
+{
+  "name": "jablecznik",
+  "isVegan": false,
+  "price": 10.00
+}
+###
+
+// @no-cookie-jar
+POST http://localhost:9080/app/api/dishes
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4=
+
+{
+  "name": "jablecznik",
+  "isVegan": false,
+  "price": 10.00
+}
+###
+
+// @no-cookie-jar
+DELETE http://localhost:9080/app/api/dishes/2
+Authorization: Basic dXNlcjE6YWJj
+###
+
+// @no-cookie-jar
+DELETE http://localhost:9080/app/api/dishes/2
+Authorization: Basic YWRtaW46YWRtaW4=
+###
+
+// @no-cookie-jar
+GET http://localhost:9080/app/api/dishes/1/opinions
+Authorization: Basic dXNlcjE6YWJj
+###
+
+// @no-cookie-jar
+GET http://localhost:9080/app/api/dishes/1/opinions
+Authorization: Basic YWRtaW46YWRtaW4=
+###
+
+
+
+
+GET http://localhost:9080/app/api/dishes/1
+###
+
+DELETE http://localhost:9080/app/api/dishes/2
+###
+
+POST http://localhost:9080/app/api/dishes
+Content-Type: application/json
+
+{
+  "name": "jablecznik",
+  "isVegan": false,
+  "price": 10.00
+}
+###
+
+PUT http://localhost:9080/app/api/dishes/9
+Content-Type: application/json
+
+{
+  "name": "szarlotka",
+  "isVegan": false,
+  "price": 20.00
+}
+###
+
+GET http://localhost:9080/app/api/dishes/1/opinions
+Authorization: Basic dXNlcjE6YWJj
+###
+
+GET http://localhost:9080/app/api/dishes/1/opinions/5
+###
+
+DELETE http://localhost:9080/app/api/dishes/1/opinions/5
+###
+
+POST http://localhost:9080/app/api/dishes/1/opinions
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "content": "good"
+}
+###
+
 
 PUT http://localhost:9080/app/api/dishes/1/opinions/9
 Content-Type: application/json
@@ -84,6 +224,14 @@ Content-Type: application/json
   "content": "very good"
 }
 ###
+
+
+
+
+
+
+
+
 
 
 

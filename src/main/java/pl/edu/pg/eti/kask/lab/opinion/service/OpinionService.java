@@ -4,12 +4,15 @@ import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.lab.dish.repository.DishRepository;
 import pl.edu.pg.eti.kask.lab.opinion.entity.Opinion;
 import pl.edu.pg.eti.kask.lab.opinion.repository.OpinionRepository;
+import pl.edu.pg.eti.kask.lab.user.entity.UserRoles;
 import pl.edu.pg.eti.kask.lab.user.repository.UserRepository;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.security.enterprise.SecurityContext;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -17,25 +20,33 @@ import java.util.Optional;
 @Stateless
 @LocalBean
 @NoArgsConstructor
+@RolesAllowed({UserRoles.USER, UserRoles.ADMIN})
 public class OpinionService {
     private OpinionRepository opinionRepository;
     private DishRepository dishRepository;
     private UserRepository userRepository;
+    private SecurityContext securityContext;
 
     @Inject
     public OpinionService(OpinionRepository opinionRepository, DishRepository dishRepository,
-                          UserRepository userRepository) {
+                          UserRepository userRepository, SecurityContext securityContext) {
         this.opinionRepository = opinionRepository;
         this.dishRepository = dishRepository;
         this.userRepository = userRepository;
+        this.securityContext = securityContext;
     }
 
+    @RolesAllowed(UserRoles.ADMIN)
     public List<Opinion> findAll() {
         return opinionRepository.findAll();
     }
 
     public List<Opinion> findAllForDish(Long dishId) {
-        return opinionRepository.findForDish(dishId);
+        System.out.println(securityContext.getCallerPrincipal().getName());
+        if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
+            return opinionRepository.findForDish(dishId);
+        }
+        return opinionRepository.findAllForDishAndUser(dishId, securityContext.getCallerPrincipal().getName());
     }
 
     public Optional<Opinion> find(Long id) {
