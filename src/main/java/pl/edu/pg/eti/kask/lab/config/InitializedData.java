@@ -53,7 +53,7 @@ public class InitializedData {
                 .email("admin2@gmail.com")
                 .userName("admin")
                 .birthDate(LocalDate.of(2000,1,1))
-                .roles(List.of(UserRoles.ADMIN, UserRoles.USER))
+                .roles(List.of(UserRoles.ADMIN))
                 .build();
 
         User user3 = User.builder()

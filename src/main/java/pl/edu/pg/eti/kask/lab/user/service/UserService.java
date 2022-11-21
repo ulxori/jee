@@ -19,7 +19,7 @@ import java.util.Optional;
 @Stateless
 @LocalBean
 @NoArgsConstructor
-@RolesAllowed(UserRoles.USER)
+@RolesAllowed({UserRoles.USER, UserRoles.ADMIN})
 public class UserService {
     private UserRepository userRepository;
     private SecurityContext securityContext;

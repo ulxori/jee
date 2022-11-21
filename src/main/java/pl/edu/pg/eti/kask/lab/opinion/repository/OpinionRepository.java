@@ -4,10 +4,8 @@ import pl.edu.pg.eti.kask.lab.opinion.entity.Opinion;
 import pl.edu.pg.eti.kask.lab.repository.SimpleRepository;
 
 import javax.enterprise.context.Dependent;
-import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +21,6 @@ public class OpinionRepository implements SimpleRepository<Opinion, Long> {
 
     @Override
     public Optional<Opinion> find(Long id) {
-        System.out.println("OpinionRepository: "+em.find(Opinion.class, id));
         return Optional.ofNullable(em.find(Opinion.class, id));
     }
 
@@ -56,6 +53,16 @@ public class OpinionRepository implements SimpleRepository<Opinion, Long> {
         return em.createQuery("select o from Opinion o where o.dish.id = :dish", Opinion.class)
                 .setParameter("dish", dishId)
                 .getResultList();
+    }
+
+    public Optional<Opinion> findForDish(Long dishId, Long opinionId) {
+        return em.createQuery("select o from Opinion o where o.dish.id = :dish" +
+                        " and o.id = :opinion", Opinion.class)
+                .setParameter("dish", dishId)
+                .setParameter("opinion", opinionId)
+                .getResultList()
+                .stream()
+                .findFirst();
     }
 
     public List<Opinion> findAllForDishAndUser(Long dishId, String userName) {

@@ -63,6 +63,7 @@ public class DishController {
     @Path("{id}")
     public Response deleteDish(@PathParam("id") Long id) {
         Optional<Dish> dish = dishService.find(id);
+        System.out.println(dish);
         if (dish.isPresent()) {
             dishService.delete(dish.get());
             return Response

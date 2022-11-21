@@ -17,12 +17,10 @@ import java.util.function.Supplier;
 @ToString
 @EqualsAndHashCode
 public class CreateDishOpinionRequest {
-    private Long userId;
     private String content;
     public static Function<CreateDishOpinionRequest, Opinion> dtoToEntityMapper(
-            Function<Long, User> userFunction, Supplier<Dish> dishSupplier) {
+             Supplier<Dish> dishSupplier) {
         return request -> Opinion.builder()
-                .user(userFunction.apply(request.getUserId()))
                 .dish(dishSupplier.get())
                 .content(request.getContent())
                 .build();

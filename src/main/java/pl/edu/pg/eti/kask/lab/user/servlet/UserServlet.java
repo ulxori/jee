@@ -5,6 +5,7 @@ import pl.edu.pg.eti.kask.lab.servlet.ServletUtility;
 import pl.edu.pg.eti.kask.lab.user.dto.GetUserResponse;
 import pl.edu.pg.eti.kask.lab.user.dto.GetUsersResponse;
 import pl.edu.pg.eti.kask.lab.user.entity.User;
+import pl.edu.pg.eti.kask.lab.user.entity.UserRoles;
 import pl.edu.pg.eti.kask.lab.user.service.UserService;
 
 import javax.inject.Inject;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @WebServlet(urlPatterns = UserServlet.Paths.USER + "/*")
+@ServletSecurity(@HttpConstraint(rolesAllowed = {UserRoles.USER, UserRoles.ADMIN}))
 public class UserServlet extends HttpServlet {
 
     private final Jsonb jsonb = JsonbBuilder.create();

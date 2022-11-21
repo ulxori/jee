@@ -17,15 +17,12 @@ import java.util.function.Supplier;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateDishOpinionRequest {
-    private Long userId;
     private String content;
-    public static Function<UpdateDishOpinionRequest, Opinion> dtoToEntityMapper(
-            Function<Long, User> userFunction, Supplier<Dish> dishSupplier) {
-        return request -> Opinion.builder()
-                .user(userFunction.apply(request.getUserId()))
-                .dish(dishSupplier.get())
-                .content(request.getContent())
-                .build();
+    public static BiFunction<Opinion, UpdateDishOpinionRequest, Opinion> dtoToEntityMapper() {
+        return (opinion, request) -> {
+            opinion.setContent(request.getContent());
+            return opinion;
+        };
     }
 }
 

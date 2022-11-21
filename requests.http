@@ -88,12 +88,7 @@ Content-Type: application/json
 
 
 
-### dXNlcjE6YWJj - user / YWRtaW46YWRtaW4= - admin
-// @no-cookie-jar
-GET http://localhost:9080/app/user
-Authorization: Basic dXNlcjE6YWJj
-###
-
+### dXNlcjE6YWJj - user / YWRtaW46YWRtaW4= - admin / bmV3OmFiYw== - new user
 // @no-cookie-jar
 POST http://localhost:9080/app/api/users
 Content-Type: application/json
@@ -108,14 +103,18 @@ Content-Type: application/json
 
 
 // @no-cookie-jar
-GET http://localhost:9080/app/user/9
+GET http://localhost:9080/app/user
+Authorization: Basic bmV3OmFiYw==
 ###
 
-
+// @no-cookie-jar
+GET http://localhost:9080/app/user
+Authorization: Basic YWRtaW46YWRtaW4=
+###
 
 // @no-cookie-jar
 GET http://localhost:9080/app/api/dishes
-Authorization: Basic dXNlcjE6YWJj
+Authorization: Basic bmV3OmFiYw==
 ###
 
 // @no-cookie-jar
@@ -126,7 +125,7 @@ Authorization: Basic YWRtaW46YWRtaW4=
 // @no-cookie-jar
 POST http://localhost:9080/app/api/dishes
 Content-Type: application/json
-Authorization: Basic dXNlcjE6YWJj
+Authorization: Basic bmV3OmFiYw==
 
 {
   "name": "jablecznik",
@@ -147,9 +146,10 @@ Authorization: Basic YWRtaW46YWRtaW4=
 }
 ###
 
+
 // @no-cookie-jar
 DELETE http://localhost:9080/app/api/dishes/2
-Authorization: Basic dXNlcjE6YWJj
+Authorization: Basic bmV3OmFiYw==
 ###
 
 // @no-cookie-jar
@@ -159,83 +159,64 @@ Authorization: Basic YWRtaW46YWRtaW4=
 
 // @no-cookie-jar
 GET http://localhost:9080/app/api/dishes/1/opinions
-Authorization: Basic dXNlcjE6YWJj
+Authorization: Basic bmV3OmFiYw==
 ###
 
 // @no-cookie-jar
 GET http://localhost:9080/app/api/dishes/1/opinions
 Authorization: Basic YWRtaW46YWRtaW4=
-###
-
-
-
-
-GET http://localhost:9080/app/api/dishes/1
-###
-
-DELETE http://localhost:9080/app/api/dishes/2
-###
-
-POST http://localhost:9080/app/api/dishes
-Content-Type: application/json
-
-{
-  "name": "jablecznik",
-  "isVegan": false,
-  "price": 10.00
-}
-###
-
-PUT http://localhost:9080/app/api/dishes/9
-Content-Type: application/json
-
-{
-  "name": "szarlotka",
-  "isVegan": false,
-  "price": 20.00
-}
-###
-
-GET http://localhost:9080/app/api/dishes/1/opinions
-Authorization: Basic dXNlcjE6YWJj
-###
-
-GET http://localhost:9080/app/api/dishes/1/opinions/5
-###
-
-DELETE http://localhost:9080/app/api/dishes/1/opinions/5
 ###
 
 POST http://localhost:9080/app/api/dishes/1/opinions
 Content-Type: application/json
+Authorization: Basic bmV3OmFiYw==
 
 {
-  "userId": 1,
   "content": "good"
 }
 ###
 
-
-PUT http://localhost:9080/app/api/dishes/1/opinions/9
+// @no-cookie-jar
+PUT http://localhost:9080/app/api/dishes/1/opinions/8
+Authorization: Basic bmV3OmFiYw==
 Content-Type: application/json
 
 {
-  "userId": 1,
   "content": "very good"
 }
 ###
 
+// @no-cookie-jar
+PUT http://localhost:9080/app/api/dishes/1/opinions/8
+Authorization: Basic YWRtaW46YWRtaW4=
+Content-Type: application/json
 
+{
+  "content": "very good"
+}
+###
 
+// @no-cookie-jar
+PUT http://localhost:9080/app/api/dishes/1/opinions/11
+Authorization: Basic bmV3OmFiYw==
+Content-Type: application/json
 
+{
+"content": "very very good"
+}
+###
 
+// @no-cookie-jar
+DELETE http://localhost:9080/app/api/dishes/1/opinions/8
+Authorization: Basic bmV3OmFiYw==
+###
 
+// @no-cookie-jar
+DELETE http://localhost:9080/app/api/dishes/1/opinions/8
+Authorization: Basic YWRtaW46YWRtaW4=
+###
 
-
-
-
-
-
-
-
-
+// @no-cookie-jar
+DELETE http://localhost:9080/app/api/dishes/1/opinions/11
+Authorization: Basic bmV3OmFiYw==
+###

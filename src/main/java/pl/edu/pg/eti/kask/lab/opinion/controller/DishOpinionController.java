@@ -13,6 +13,7 @@ import pl.edu.pg.eti.kask.lab.user.service.UserService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
+import javax.ejb.EJBAccessException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Path("/dishes/{dishId}/opinions")
-@RolesAllowed(UserRoles.USER)
+@RolesAllowed({UserRoles.USER, UserRoles.ADMIN})
 public class DishOpinionController {
     private OpinionService opinionService;
     private UserService userService;
@@ -59,7 +60,14 @@ public class DishOpinionController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDishOpinion(@PathParam("dishId") Long dishId, @PathParam("id") Long id) {
         Optional<Dish> dish = dishService.find(dishId);
-        Optional<Opinion> opinion = opinionService.find(id);
+        Optional<Opinion> opinion;
+        try {
+            opinion = opinionService.find(id);
+        } catch (EJBAccessException ejbae) {
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .build();
+        }
         if (opinion.isEmpty() || dish.isEmpty()) {
             return Response
                     .status(Response.Status.NOT_FOUND)
@@ -74,15 +82,14 @@ public class DishOpinionController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postDishOpinion(@PathParam("dishId") Long id, CreateDishOpinionRequest request) {
         Opinion opinion = CreateDishOpinionRequest
-                .dtoToEntityMapper(userId -> userService.find(userId).orElse(null), () -> dishService.find(id).orElse(null))
+                .dtoToEntityMapper(() -> dishService.find(id).orElse(null))
                 .apply(request);
-        if (opinion.getDish() == null || opinion.getUser() == null) {
+        if (opinion.getDish() == null) {
             return Response
                     .status(Response.Status.NOT_FOUND)
                     .build();
         }
         opinionService.create(opinion);
-        System.out.println(opinion);
         return Response
                 .created(UriBuilder
                         .fromMethod(DishOpinionController.class, "getDishOpinion")
@@ -93,36 +100,47 @@ public class DishOpinionController {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response putDishOpinion(@PathParam("dishId") Long dishId, @PathParam("id") Long id, UpdateDishOpinionRequest request) {
-        Opinion updatedOpinion = UpdateDishOpinionRequest
-                .dtoToEntityMapper(userId -> userService.find(userId).orElse(null), () -> dishService.find(dishId).orElse(null))
-                .apply(request);
+        try {
+            Optional<Opinion> old = opinionService.findForDish(dishId, id);
 
-       Optional<Opinion> old = opinionService.find(id);
+            if (old.isEmpty()) {
+                return Response
+                        .status(Response.Status.NOT_FOUND)
+                        .build();
+            }
 
-        if (old.isEmpty() || updatedOpinion.getDish() == null || updatedOpinion.getUser() == null) {
-            System.out.println("not found");
+            Opinion updatedOpinion = UpdateDishOpinionRequest
+                    .dtoToEntityMapper()
+                    .apply(old.get(), request);
+
+            opinionService.update(updatedOpinion);
             return Response
-                    .status(Response.Status.NOT_FOUND)
+                    .status(Response.Status.NO_CONTENT)
+                    .build();
+        } catch (EJBAccessException ejbae) {
+            return Response
+                    .status(Response.Status.FORBIDDEN)
                     .build();
         }
-        updatedOpinion.setId(old.get().getId());
-        opinionService.update(updatedOpinion);
-        return Response
-                .status(Response.Status.NO_CONTENT)
-                .build();
     }
     @DELETE
     @Path("{id}")
     public Response deleteDishOpinion(@PathParam("id") Long id) {
-        Optional<Opinion> opinion = opinionService.find(id);
-        if (opinion.isEmpty()) {
-           return Response
-                   .status(Response.Status.NOT_FOUND)
-                   .build();
+        try {
+            Optional<Opinion> opinion = opinionService.find(id);
+            if (opinion.isEmpty()) {
+                return Response
+                        .status(Response.Status.NOT_FOUND)
+                        .build();
+            }
+            opinionService.delete(opinion);
+            return Response
+                    .status(Response.Status.NO_CONTENT)
+                    .build();
+        } catch (EJBAccessException ejbae) {
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .build();
         }
-        opinionService.delete(opinion.get());
-        return Response
-                .status(Response.Status.NO_CONTENT)
-                .build();
     }
 }

@@ -22,8 +22,13 @@ public class UserRepository implements SimpleRepository<User, Long> {
 
     @Override
     public Optional<User> find(Long id) {
-//        System.out.println("User repository" + em.find(User.class,id) + " opinions "+ em.getReference(User.class,id).getOpinions().size());
         return Optional.ofNullable(em.find(User.class, id));
+    }
+
+    public Optional<User> findByUserName(String userName) {
+        return Optional.of(em.createQuery("select u from User u where u.userName = :user", User.class)
+                .setParameter("user", userName)
+                .getSingleResult());
     }
 
     @Override

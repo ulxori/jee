@@ -5,6 +5,7 @@ import pl.edu.pg.eti.kask.lab.user.dto.CreateUserRequest;
 import pl.edu.pg.eti.kask.lab.user.entity.User;
 import pl.edu.pg.eti.kask.lab.user.service.UserService;
 
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.UriBuilder;
 
 @Path("/users")
 @NoArgsConstructor
+@PermitAll
 public class UserController {
 
     private UserService userService;
